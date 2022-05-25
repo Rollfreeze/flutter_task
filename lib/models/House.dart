@@ -8,7 +8,7 @@ class House {
 	late String type;
 	late int rating;
 	late int review_count;
-	late List<String> images;
+	late List<String>? images;
 	late int price;
 
 
