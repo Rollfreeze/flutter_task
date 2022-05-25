@@ -3,6 +3,7 @@ import 'package:flutter_test_app/exceptions/BackendConnectionServiceException.da
 import 'package:http/http.dart' as http;
 
 class BackendConnectionService {
+	/// Заголовки для запроса
 	Map<String, String> headers = {
 		"Content-Type": "application/json",
 		"Accept": "application/json",
@@ -21,7 +22,6 @@ class BackendConnectionService {
   }
 
 	/// Основной метод запроса
-  /// 
   _request({required String url, String type = 'get', body}) async {
     try {
       var response = await _selectRequest(url: url, type: type, body: body);
@@ -48,7 +48,6 @@ class BackendConnectionService {
   }
 
 	/// Выбор типа реквеста
-  /// 
   _selectRequest({required url, type, body}) async {
 		switch (type){
 			case 'post':

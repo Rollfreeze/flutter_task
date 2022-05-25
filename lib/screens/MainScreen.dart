@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_test_app/components/BackendConnectionService.dart';
-import 'package:flutter_test_app/models/House.dart';
+import 'package:flutter_test_app/components/HousesList.dart';
 
 class MainScreen extends StatefulWidget {
 	const MainScreen({
@@ -15,20 +15,34 @@ class _MainScreenState extends State<MainScreen> {
 	/// url для получения объявлений
 	final url = "https://elki.rent/test/house.json";
 
-	late var advertismentsList;
+	TextStyle buttonTextStyleNormal = const TextStyle(
+		fontFamily: 'Roboto',
+		fontWeight: FontWeight.w500,
+		fontSize: 16,
+		color: Colors.black,
+	);
 
-	/// Получаем список объявлений
-	fetchAdvertismentCards() {
-		advertismentsList = BackendConnectionService.request(url: url);
-	}
-
+	@override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-		fetchAdvertismentCards();
-
-		print(advertismentsList);
-
-    throw UnimplementedError();
+		return FutureBuilder(
+			future: HousesList.fetchAdvertismentCards(url),
+		
+			builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
+				if (snapshot.connectionState == ConnectionState.waiting) {
+		    	return const Center(child: CircularProgressIndicator());
+				}
+		
+				if (snapshot.hasError) {
+					return const Center(child: Text('Ошибка получения данных'));
+				}
+		
+				return Center(child: Text('Success!'));
+			}
+		);
   }
 }

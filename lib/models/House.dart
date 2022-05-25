@@ -20,7 +20,16 @@ class House {
 		type = map['type'];
 		rating = map['rating'];
 		review_count = map['review_count'];
-		images = map['images'];
+		
+		if (map['images'] != null) {
+			images = [];
+			for (int i = 0; i < map['images'].length; i++) {
+				images!.add(map['images'][i]);
+			}
+		}
+
 		price = map['price'];
   }
+
+	
 }
