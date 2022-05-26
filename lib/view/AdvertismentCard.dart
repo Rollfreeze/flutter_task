@@ -109,6 +109,7 @@ class AdvertismentCard extends StatelessWidget {
     );
   }
 
+	/// Возвращает блок с ценой за сутки
   Widget buildPricePerDay() {
     // todo: отсупы 9.000
     Text price = Text(house.price.toString() + '₽', style: nameStyle);

@@ -24,14 +24,41 @@ class _MainScreenState extends State<MainScreen> {
 		color: Colors.black,
 	);
 
+  void allFrame() {
+    setState(() {
+      filterButtonList.forEach((element) => element.isActiveNow = false);
+
+      filterButtonList[0].isActiveNow = true;
+    });
+  }
+
+  void oFrame() {
+    setState(() {
+      filterButtonList.forEach((element) => element.isActiveNow = false);
+
+      filterButtonList[1].isActiveNow = true;
+    });
+  }
+
+  void aFrame() {
+    setState(() {
+      filterButtonList.forEach((element) => element.isActiveNow = false);
+
+      filterButtonList[2].isActiveNow = true;
+    });
+  }
+
+	late List<FilterButton> filterButtonList = [];
+
 	/// Строка фильтров
 	Row buildFilterRow() {
 		return Row(
-			children: [
-				FilterButton(buttonText: 'все дома', isActiveNow: true, pressedCB: (){}),
-				FilterButton(buttonText: 'O-frame', isActiveNow: false, pressedCB: (){}),
-				FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: (){}),
-			],
+			// children: [
+			// 	FilterButton(buttonText: 'все дома', isActiveNow: true, pressedCB: (){}),
+			// 	FilterButton(buttonText: 'O-frame', isActiveNow: false, pressedCB: (){}),
+			// 	FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: (){}),
+			// ],
+			children: filterButtonList
 		);
 	}
 
@@ -51,6 +78,11 @@ class _MainScreenState extends State<MainScreen> {
 
 	@override
   void initState() {
+    filterButtonList = [
+      FilterButton(buttonText: 'все дома', isActiveNow: true, pressedCB: allFrame),
+      FilterButton(buttonText: 'O-frame', isActiveNow: false, pressedCB: oFrame),
+      FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: aFrame),
+    ];
     super.initState();
   }
 

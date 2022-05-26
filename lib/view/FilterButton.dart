@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class FilterButton extends StatefulWidget {
 	final String buttonText;
-	final bool isActiveNow;
+	bool isActiveNow;
 	final pressedCB;
 	
 	var fontSize;
@@ -33,13 +33,6 @@ class _FilterButtonState extends State<FilterButton> {
 		fontWeight: FontWeight.w400,
 		fontSize: 16,
 		color: Colors.black,
-	);
-
-	TextStyle buttonTextStylePrimary = const TextStyle(
-		fontFamily: 'Roboto',
-		fontWeight: FontWeight.w400,
-		fontSize: 21,
-		color: Colors.white,
 	);
 
 	@override
