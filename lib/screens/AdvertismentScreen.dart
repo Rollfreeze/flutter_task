@@ -95,11 +95,8 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
       carouselController: AdvertismentScreen.buttonCarouselController,
       options: CarouselOptions(
         height: 264,
-				// pageSnapping: true,
 				viewportFraction: 1,
-        // autoPlay: false,
-        // enlargeCenterPage: false,
-        enableInfiniteScroll: false,
+        enableInfiniteScroll: true,
         initialPage: 0,
         onPageChanged: (index, reason) => setState(() => {currentImageNumber = index}),
       ),
@@ -169,13 +166,18 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
     );
   }
 
-	/// Возвращает блок с ценой за сутки
+  /// Возвращает блок с ценой за сутки
   Widget buildPricePerDay() {
     // todo: отсупы 9.000
     Text price = Text(widget.house.price.toString() + '₽', style: nameStyle);
     Text perDay = Text('/сут.', style: descriptionStyle);
 
-    return Row(children: [price, perDay]);
+    return Row(children: [
+      Baseline(
+          baseline: 15, baselineType: TextBaseline.alphabetic, child: price),
+      Baseline(
+          baseline: 10, baselineType: TextBaseline.alphabetic, child: perDay)
+    ]);
   }
 
 	/// Метод возвращает нижний блок
@@ -203,11 +205,18 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
 							buildPricePerDay(),
 							
 							/// Primary Button - "Назад"
-							const PrimaryButton(buttonText: 'Назад', pressedCB: null)
-					]),
+							PrimaryButton(
+								buttonText: 'Назад',
+								pressedCB: goBackAction,
+							),
+        ]),
 				),
     );
   }
+
+	goBackAction() {
+		return NavigationService.instance.goback();
+	}
 
 	@override
   void initState() {
