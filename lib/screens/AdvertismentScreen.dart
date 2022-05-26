@@ -3,6 +3,7 @@ import 'package:flutter_test_app/components/NavigationService.dart';
 import 'package:flutter_test_app/models/House.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_test_app/screens/ViewPhotoWidget.dart';
+import 'package:flutter_test_app/view/PrimaryButton.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 
@@ -125,12 +126,87 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
       );
 
 
+	/// Возвращает блок с описанием дома
 	Widget buildDescriptionHouse() {
 		return Row(
 			children: [
 				Expanded(child: Text(widget.house.description, style: descriptionStyle, maxLines: 5)),
 		]);
 	}
+
+	/// Данный метод возвращает верхнюю половину
+  /// объявления
+  Widget buildTopPart() {
+    return Column(
+      children: [
+        Stack(children: [
+          /// Картинки
+          if (!anyImageExist)
+            buildEmptyImagesContainer()
+          else
+            buildCarouselSlider(),
+
+          /// точечки снизу
+          Visibility(
+            visible: (widget.house.images.length > 1),
+            child: Positioned.fill(
+              bottom: 20,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: buildIndicator(),
+              ),
+            ),
+          ),
+        ]),
+
+        /// Описание дома
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          child: buildDescriptionHouse(),
+        ),
+      ],
+    );
+  }
+
+	/// Возвращает блок с ценой за сутки
+  Widget buildPricePerDay() {
+    // todo: отсупы 9.000
+    Text price = Text(widget.house.price.toString() + '₽', style: nameStyle);
+    Text perDay = Text('/сут.', style: descriptionStyle);
+
+    return Row(children: [price, perDay]);
+  }
+
+	/// Метод возвращает нижний блок
+	/// объявления, который включает в себя
+	/// кнопку назад и стоимость
+  Widget buildBottom() {
+    return Container(
+      decoration: BoxDecoration(
+				color: Colors.white,
+
+				boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.3),
+          spreadRadius: 1,
+          blurRadius: 10,
+          offset: const Offset(0, -5),
+        ),
+      ]),
+      child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 21.0, horizontal: 16.0),
+					child: Row(
+						mainAxisAlignment: MainAxisAlignment.spaceBetween,
+						children: [
+							/// Цена за сутки
+							buildPricePerDay(),
+							
+							/// Primary Button - "Назад"
+							const PrimaryButton(buttonText: 'Назад', pressedCB: null)
+					]),
+				),
+    );
+  }
 
 	@override
   void initState() {
@@ -140,42 +216,30 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
 
   @override
   Widget build(BuildContext context) {
-		return Scaffold(
-			appBar: AppBar(
-				automaticallyImplyLeading: false,
-				backgroundColor: const Color.fromRGBO(243, 243, 245, 1),
-				title: Padding(
-				  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-				  child: buildTitle(),
-				),
-			),
-			body: Column(
-			  children: [
-			    Stack(
-			    	children: [
-			    		if (!anyImageExist) buildEmptyImagesContainer()
-			    	 	else buildCarouselSlider(),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromRGBO(243, 243, 245, 1),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: buildTitle(),
+        ),
+      ),
+      body: SafeArea(
+				top: true,
+				bottom: true,
+        child: Column(
+				mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+					/// Верхняя половина
+					/// объялвения: Картинки, описание
+					buildTopPart(),
 
-			    		/// точечки снизу
-			    		Visibility(
-			    			visible: (widget.house.images.length > 1),
-			    			child: Positioned.fill(
-			    				bottom: 20,
-			    				child: Align(
-			    					alignment: Alignment.bottomCenter,
-			    					child: buildIndicator(),
-			    				),
-			    			),
-			    		),
-
-      		]),
-
-			    Padding(
-			      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-			      child: buildDescriptionHouse(),
-			    ),
-
-			  ],
-			),
+					/// Нижняя половина объявления
+					buildBottom()
+          ],
+        ),
+      ),
     );
-  }}
+  }
+}

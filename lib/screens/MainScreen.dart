@@ -40,7 +40,6 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
       decoration: const BoxDecoration(color: Color.fromRGBO(243, 243, 245, 1)),
       margin: const EdgeInsets.only(top: 70.0, left: 16.0, right: 16.0),
-      // padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {

@@ -5,12 +5,15 @@ class FilterButton extends StatefulWidget {
 	final String buttonText;
 	final bool isActiveNow;
 	final pressedCB;
+	
+	var fontSize;
 
-	const FilterButton({
+	FilterButton({
 		Key? key,
 		required this.buttonText,
 		required this.isActiveNow,
 		required this.pressedCB,
+		this.fontSize = 16,
 	}) : super(key: key);
 
   @override
@@ -30,6 +33,13 @@ class _FilterButtonState extends State<FilterButton> {
 		fontWeight: FontWeight.w400,
 		fontSize: 16,
 		color: Colors.black,
+	);
+
+	TextStyle buttonTextStylePrimary = const TextStyle(
+		fontFamily: 'Roboto',
+		fontWeight: FontWeight.w400,
+		fontSize: 21,
+		color: Colors.white,
 	);
 
 	@override
