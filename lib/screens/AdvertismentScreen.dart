@@ -41,6 +41,13 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
     color: Colors.grey,
   );
 
+	TextStyle descriptionStyle = const TextStyle(
+		fontFamily: 'Roboto',
+		fontWeight: FontWeight.w400,
+		fontSize: 16,
+		color: Colors.black
+	);
+
 	/// Возвращает тайтл карточки
   Widget buildTitle() {
     Text advertismentName = Text(widget.house.name, style: nameStyle);
@@ -86,10 +93,10 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
       carouselController: AdvertismentScreen.buttonCarouselController,
       options: CarouselOptions(
         height: 264,
-				pageSnapping: true,
+				// pageSnapping: true,
 				viewportFraction: 1,
-        autoPlay: false,
-        enlargeCenterPage: false,
+        // autoPlay: false,
+        // enlargeCenterPage: false,
         enableInfiniteScroll: false,
         initialPage: 0,
         onPageChanged: (index, reason) => setState(() => {currentImageNumber = index}),
@@ -117,6 +124,14 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
         ),
       );
 
+
+	Widget buildDescriptionHouse() {
+		return Row(
+			children: [
+				Expanded(child: Text(widget.house.description, style: descriptionStyle, maxLines: 5)),
+		]);
+	}
+
 	@override
   void initState() {
     anyImageExist = (widget.house.images != '0');
@@ -134,22 +149,33 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
 				  child: buildTitle(),
 				),
 			),
-			body: Stack(
-				children: [
-					if (!anyImageExist) buildEmptyImagesContainer()
-				 	else buildCarouselSlider(),
+			body: Column(
+			  children: [
+			    Stack(
+			    	children: [
+			    		if (!anyImageExist) buildEmptyImagesContainer()
+			    	 	else buildCarouselSlider(),
 
-					/// точечки снизу
-					Visibility(
-						visible: (widget.house.images.length > 1),
-						child: Positioned.fill(
-							bottom: 20,
-							child: Align(
-								alignment: Alignment.bottomCenter,
-								child: buildIndicator(),
-							),
-						),
-					),
-      ]),
+			    		/// точечки снизу
+			    		Visibility(
+			    			visible: (widget.house.images.length > 1),
+			    			child: Positioned.fill(
+			    				bottom: 20,
+			    				child: Align(
+			    					alignment: Alignment.bottomCenter,
+			    					child: buildIndicator(),
+			    				),
+			    			),
+			    		),
+
+      		]),
+
+			    Padding(
+			      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+			      child: buildDescriptionHouse(),
+			    ),
+
+			  ],
+			),
     );
   }}
