@@ -8,7 +8,11 @@ class House {
 	late String type;
 	late int rating;
 	late int review_count;
-	late List<String>? images;
+
+	/// может быть null - тогда заменим на '0'
+	/// или может прийти список string List<String>
+	late dynamic images;
+
 	late int price;
 
 
@@ -21,11 +25,13 @@ class House {
 		rating = map['rating'];
 		review_count = map['review_count'];
 		
-		if (map['images'] != null) {
+		if (map['images'].length > 0) {
 			images = [];
 			for (int i = 0; i < map['images'].length; i++) {
 				images!.add(map['images'][i]);
 			}
+		} else {
+			images = '0';
 		}
 
 		price = map['price'];
