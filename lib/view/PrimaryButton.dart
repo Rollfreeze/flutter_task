@@ -36,7 +36,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
 				
 			),
 			child: Padding(
-			  padding: const EdgeInsets.symmetric(horizontal: 82.0, vertical: 15.0),
+			  padding: const EdgeInsets.symmetric(horizontal: 74.0, vertical: 15.0),
 			  child: Text(widget.buttonText, style: primaryButtonTextStyle),
 			),
 			onPressed: () => widget.pressedCB(),
