@@ -16,6 +16,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 	/// url для получения объявлений
 	final url = "https://elki.rent/test/house.json";
+	late var futureFetch;
+	late List<FilterButton> filterButtonList = [];
 
 	TextStyle buttonTextStyleNormal = const TextStyle(
 		fontFamily: 'Roboto',
@@ -24,42 +26,32 @@ class _MainScreenState extends State<MainScreen> {
 		color: Colors.black,
 	);
 
-  void allFrame() {
+	void switchBtn(index) {
     setState(() {
       filterButtonList.forEach((element) => element.isActiveNow = false);
-
-      filterButtonList[0].isActiveNow = true;
+      filterButtonList[index].isActiveNow = true;
     });
+	}
+
+  allFrame() {
+    futureFetch = HousesList.fetchAdvertismentCards(this.url);
+    switchBtn(0);
   }
 
-  void oFrame() {
-    setState(() {
-      filterButtonList.forEach((element) => element.isActiveNow = false);
-
-      filterButtonList[1].isActiveNow = true;
-    });
+  oFrame() {
+    futureFetch = HousesList.fetchOFrameCards();
+    switchBtn(1);
   }
 
-  void aFrame() {
-    setState(() {
-      filterButtonList.forEach((element) => element.isActiveNow = false);
-
-      filterButtonList[2].isActiveNow = true;
-    });
+  aFrame() {
+    futureFetch = HousesList.fetchAFrameCards();
+    switchBtn(2);
   }
 
-	late List<FilterButton> filterButtonList = [];
 
 	/// Строка фильтров
 	Row buildFilterRow() {
-		return Row(
-			// children: [
-			// 	FilterButton(buttonText: 'все дома', isActiveNow: true, pressedCB: (){}),
-			// 	FilterButton(buttonText: 'O-frame', isActiveNow: false, pressedCB: (){}),
-			// 	FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: (){}),
-			// ],
-			children: filterButtonList
-		);
+		return Row(mainAxisAlignment: MainAxisAlignment.start, children: filterButtonList);
 	}
 
 	/// Возвращает список объявлений
@@ -83,6 +75,8 @@ class _MainScreenState extends State<MainScreen> {
       FilterButton(buttonText: 'O-frame', isActiveNow: false, pressedCB: oFrame),
       FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: aFrame),
     ];
+
+		futureFetch = HousesList.fetchAdvertismentCards(url);
     super.initState();
   }
 
@@ -91,7 +85,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
 			backgroundColor: const Color.fromRGBO(243, 243, 245, 1),
       body: FutureBuilder(
-          future: HousesList.fetchAdvertismentCards(url),
+          future: futureFetch,
           builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -102,7 +96,10 @@ class _MainScreenState extends State<MainScreen> {
             }
 						
 						/// Полученные данные - список объявлений
-						var data = snapshot.data as List<House>;
+						var data = [];
+						data = snapshot.data as List<House>;
+						
+						print(data);
 
 						return SafeArea(
 							top: true,
