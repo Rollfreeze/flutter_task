@@ -23,7 +23,6 @@ class AdvertismentScreen extends StatefulWidget {
 
 class _AdvertismentScreenState extends State<AdvertismentScreen> {
 	late bool anyImageExist;
-
   int currentImageNumber = 0;
 
 	/// Текст стиль для имени объявления
@@ -42,11 +41,13 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
     color: Colors.grey,
   );
 
+	/// Стиль для описания характеристик дома
 	TextStyle descriptionStyle = const TextStyle(
 		fontFamily: 'Roboto',
 		fontWeight: FontWeight.w400,
 		fontSize: 16,
-		color: Colors.black
+		color: Colors.black,
+		height: 1.7
 	);
 
 	/// Возвращает тайтл карточки
@@ -218,6 +219,7 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+				elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(243, 243, 245, 1),
         title: Padding(
