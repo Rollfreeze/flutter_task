@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ImgAvatar extends StatelessWidget {
   final String txt;
-  ImgAvatar({Key? key, required this.txt}) : super(key: key);
+  const ImgAvatar({Key? key, required this.txt}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

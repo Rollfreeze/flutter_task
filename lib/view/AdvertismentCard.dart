@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/components/NavigationService.dart';
 import 'package:flutter_test_app/models/House.dart';
+import 'package:flutter_test_app/screens/AdvertismentScreen.dart';
 import 'package:flutter_test_app/view/ImgAvatar.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -148,10 +150,17 @@ class AdvertismentCard extends StatelessWidget {
     return cardBlocks;
   }
 
+	/// Метод, позволяющий перейти в объявление при тапе
+  navigateToAdvertismentScreen() {
+    NavigationService.instance.navigateToRoute(MaterialPageRoute(builder: (_) {
+      return AdvertismentScreen(house: house);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => navigateToAdvertismentScreen(),
       child: Container(
 				clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.only(bottom: 16.0),

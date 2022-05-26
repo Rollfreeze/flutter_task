@@ -38,7 +38,7 @@ class _FilterButtonState extends State<FilterButton> {
 		  padding: const EdgeInsets.only(right: 8.0),
 		  child: OutlinedButton(
 		  	style: OutlinedButton.styleFrom(
-		  		shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19.0)),
+					shape: const StadiumBorder(),
 		  		backgroundColor: (widget.isActiveNow) ? const Color.fromRGBO(116, 109, 247, 1) : const Color.fromRGBO(237, 237, 237, 1),
 		  		side:  BorderSide(
 		  			width: 1, 

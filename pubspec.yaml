@@ -41,6 +41,10 @@ dev_dependencies:
   image_picker: ^0.8.4+4
   http: ^0.13.4
   flutter_svg: ^0.23.0+1
+  carousel_slider: ^4.0.0
+  photo_view: ^0.13.0
+  smooth_page_indicator: ^1.0.0+2 # ios style page indication
+
   
 
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test_app/components/HousesList.dart';
 import 'package:flutter_test_app/models/House.dart';
 import 'package:flutter_test_app/view/AdvertismentCard.dart';
@@ -29,12 +28,27 @@ class _MainScreenState extends State<MainScreen> {
 	Row buildFilterRow() {
 		return Row(
 			children: [
-				FilterButton(buttonText: 'все для дома', isActiveNow: true, pressedCB: (){}),
+				FilterButton(buttonText: 'все дома', isActiveNow: true, pressedCB: (){}),
 				FilterButton(buttonText: 'O-frame', isActiveNow: false, pressedCB: (){}),
 				FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: (){}),
 			],
 		);
 	}
+
+	/// Возвращает список объявлений
+  Widget buildAdvertismentsList(data) {
+    return Container(
+      decoration: const BoxDecoration(color: Color.fromRGBO(243, 243, 245, 1)),
+      margin: const EdgeInsets.only(top: 70.0, left: 16.0, right: 16.0),
+      // padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return AdvertismentCard(house: data[index]);
+        },
+      ),
+    );
+  }
 
 	@override
   void initState() {
@@ -71,17 +85,7 @@ class _MainScreenState extends State<MainScreen> {
 									),
 								
 									/// Список объявлений
-									Container(
-										decoration: const BoxDecoration(color: Color.fromRGBO(243, 243, 245, 1)),
-										margin: const EdgeInsets.only(top: 70.0, left: 16.0, right: 16.0),
-										// padding: const EdgeInsets.symmetric(horizontal: 16.0),
-									  child: ListView.builder(
-									  	itemCount: data.length,
-									  	itemBuilder: (context, index) {
-									  		return AdvertismentCard(house: data[index]);
-									  	},
-									  ),
-									),
+									buildAdvertismentsList(data)
 						  	],
 						  ),
 						);
