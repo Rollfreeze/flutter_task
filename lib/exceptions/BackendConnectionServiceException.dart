@@ -6,3 +6,4 @@ class BackendConnectionServiceException implements Exception {
   int code = 0;
   setCode(int c) => code = c;  
 }
+

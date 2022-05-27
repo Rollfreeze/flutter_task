@@ -38,6 +38,5 @@ class House {
 
 		price = map['price'];
   }
-
-	
 }
+

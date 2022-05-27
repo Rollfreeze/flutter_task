@@ -182,3 +182,4 @@ class AdvertismentCard extends StatelessWidget {
     );
   }
 }
+

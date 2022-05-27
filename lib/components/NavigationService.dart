@@ -17,3 +17,4 @@ class NavigationService {
     return navigationKey.currentState!.pop();
   }
 }
+

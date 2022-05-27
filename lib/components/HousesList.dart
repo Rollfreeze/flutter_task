@@ -59,3 +59,4 @@ class HousesList {
 		return HousesList.housesListAFrame;
   }
 }
+

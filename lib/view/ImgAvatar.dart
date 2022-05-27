@@ -13,3 +13,4 @@ class ImgAvatar extends StatelessWidget {
     return Image.network(txt, fit: BoxFit.fitHeight);
   }
 }
+

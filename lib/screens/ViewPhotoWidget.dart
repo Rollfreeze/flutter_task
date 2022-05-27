@@ -87,3 +87,4 @@ class _ViewPhotoWidgetState extends State<ViewPhotoWidget> {
         ),
       );
 }
+
