@@ -3,6 +3,9 @@ import 'package:flutter_test_app/exceptions/BackendConnectionServiceException.da
 import 'package:http/http.dart' as http;
 
 class BackendConnectionService {
+	/// url для получения объявлений
+	final url = "https://elki.rent/test/house.json";
+
 	/// Заголовки для запроса
 	Map<String, String> headers = {
 		"Content-Type": "application/json",
@@ -37,7 +40,6 @@ class BackendConnectionService {
       throw except;
     } catch (except) {
 			/// Другая ошибка - например, пришел неправильный json
-      print(except);
       BackendConnectionServiceException be = BackendConnectionServiceException(except.toString());
 
 			/// Явно обозначим ее нулем,
@@ -57,7 +59,7 @@ class BackendConnectionService {
 			case 'delete':
 				return await http.delete(Uri.parse(url), headers: headers, body: body);
 			default:
-				throw new BackendConnectionServiceException("Unknown request type");
+				throw BackendConnectionServiceException("Unknown request type");
 		}
   }
 }

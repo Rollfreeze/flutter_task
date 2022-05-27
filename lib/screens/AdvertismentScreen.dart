@@ -214,6 +214,7 @@ class _AdvertismentScreenState extends State<AdvertismentScreen> {
     );
   }
 
+	/// Экшен для кнопки "назад"
 	goBackAction() {
 		return NavigationService.instance.goback();
 	}

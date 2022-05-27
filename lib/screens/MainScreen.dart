@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/components/BackendConnectionService.dart';
 import 'package:flutter_test_app/components/HousesList.dart';
 import 'package:flutter_test_app/models/House.dart';
 import 'package:flutter_test_app/view/AdvertismentCard.dart';
 import 'package:flutter_test_app/view/FilterButton.dart';
+import 'package:flutter_test_app/view/PrimaryButton.dart';
 
 class MainScreen extends StatefulWidget {
 	const MainScreen({
@@ -14,8 +16,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-	/// url для получения объявлений
-	final url = "https://elki.rent/test/house.json";
 	late var futureFetch;
 	late List<FilterButton> filterButtonList = [];
 
@@ -26,6 +26,14 @@ class _MainScreenState extends State<MainScreen> {
 		color: Colors.black,
 	);
 
+	void refreshCB() {
+		setState(() {
+			futureFetch = HousesList.fetchAdvertismentCards(BackendConnectionService().url);
+		});
+	}
+
+	/// Вспомогательный метод для переключения активного состояния
+	/// кнопки сортировки
 	void switchBtn(index) {
     setState(() {
       filterButtonList.forEach((element) => element.isActiveNow = false);
@@ -33,16 +41,21 @@ class _MainScreenState extends State<MainScreen> {
     });
 	}
 
+	/* Методы для соотвуствующих кнопок сортировки: */
+
+	/// Все
   allFrame() {
-    futureFetch = HousesList.fetchAdvertismentCards(this.url);
+    futureFetch = HousesList.fetchAdvertismentCards(BackendConnectionService().url);
     switchBtn(0);
   }
 
+	/// O-frame
   oFrame() {
     futureFetch = HousesList.fetchOFrameCards();
     switchBtn(1);
   }
 
+	/// A-frame
   aFrame() {
     futureFetch = HousesList.fetchAFrameCards();
     switchBtn(2);
@@ -76,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
       FilterButton(buttonText: 'A-frame', isActiveNow: false, pressedCB: aFrame),
     ];
 
-		futureFetch = HousesList.fetchAdvertismentCards(url);
+		futureFetch = HousesList.fetchAdvertismentCards(BackendConnectionService().url);
     super.initState();
   }
 
@@ -92,15 +105,21 @@ class _MainScreenState extends State<MainScreen> {
             }
 
             if (snapshot.hasError) {
-              return const Center(child: Text('Ошибка получения данных'));
+							return Column(
+								mainAxisAlignment: MainAxisAlignment.center,
+								children: [
+									Text('Ошибка получения данных', style: buttonTextStyleNormal),	
+									Padding(
+									  padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+									  child: PrimaryButton(buttonText: 'Попробовать еще раз', pressedCB: refreshCB),
+									),		
+								],
+							);
             }
 						
 						/// Полученные данные - список объявлений
-						var data = [];
-						data = snapshot.data as List<House>;
+						var data = snapshot.data as List<House>;
 						
-						print(data);
-
 						return SafeArea(
 							top: true,
 							bottom: true,

@@ -11,8 +11,10 @@ class House {
 
 	/// может быть null - тогда заменим на '0'
 	/// или может прийти список string List<String>
+	/// 
+	/// Про nullable переменные (List?, int?...) я знаю,
+	/// но считаю, что здесь удобнее обозначить именно через dynamic
 	late dynamic images;
-
 	late int price;
 
 
